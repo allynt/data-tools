@@ -1,0 +1,6 @@
+# don't include the contents of the data directory
+*
+*/
+!.gitignore
+
+
