@@ -2,6 +2,9 @@ import pandas as pd
 import geopandas as gpd
 
 
+CRS = "EPSG:4326"
+
+
 def clean_data_frame(data_frame):
     # replace NaN w/ None...
     data_frame = data_frame.where((pd.notnull(data_frame)), None)
