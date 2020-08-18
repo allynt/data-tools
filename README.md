@@ -12,3 +12,8 @@ Typical usage is...
 4. `merge_data_and_geometry` to merge a bunch of data CSV files w/ the aforementioned geometry
 5. `constrain_data` to select a subset of data columns (and potentially rename them)
 6. `generate_mvt` to convert that converted/combined/merged/constrained data from GeoJSON to MVT
+7. upload to **static-data-server**: `aws s3 cp --profile orbis-<environment> ./<whatever> s3://astrosat-<environment>-staticdata/<whatever> --recursive`
+
+## notes
+
+`aws s3 sync --profile orbis-<environment> s3://astrosat-<environment>-staticdata/ .`

@@ -29,7 +29,11 @@ def reindex_data_frame(data_frame, index_name="index"):
 
 
 def select_and_rename_columns(data_frame, columns, ignore_missing=False):
-    # TODO: DO SOMETHING W/ ignore_missing
+    if ignore_missing:
+        columns = {
+            k: v for k, v in columns.items()
+            if k in data_frame.columns
+        }
     data_frame = data_frame[list(columns.keys())]
     data_frame = data_frame.rename(columns=columns)
     return data_frame
