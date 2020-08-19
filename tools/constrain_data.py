@@ -23,7 +23,7 @@ def constrain_data(index, output, columns, data):
 
     # geo_data_frame = gpd.read_file(data)
     geo_data_frame = import_really_big_geometry(data, index_name=index)
-    geo_data_frame[index] = geo_data_frame.index
+    geo_data_frame["index"] = geo_data_frame.index
     constrained_geo_data_frame = select_and_rename_columns(geo_data_frame, columns, ignore_missing=True)
     constrained_geo_data_frame.to_file(output, driver="GeoJSON")
 
