@@ -1,3 +1,5 @@
+import json
+
 import pandas as pd
 import geopandas as gpd
 
@@ -41,6 +43,16 @@ def select_and_rename_columns(data_frame, columns, ignore_missing=False):
 
 def import_geometry(geometry_file, index_name="index"):
     geo_data_frame = gpd.read_file(geometry_file)
+    geo_data_frame = reindex_data_frame(geo_data_frame, index_name=index_name)
+    geo_data_frame = clean_data_frame(geo_data_frame)
+    return geo_data_frame
+
+
+def import_really_big_geometry(geometry_file, index_name="index"):
+    # working w/ OA is a PITA b/c it's really big;
+    # I have to buffer the content in JSON or I run out of memory
+    geo_data_content = json.load(geometry_file)
+    geo_data_frame = gpd.GeoDataFrame.from_features(geo_data_content["features"])
     geo_data_frame = reindex_data_frame(geo_data_frame, index_name=index_name)
     geo_data_frame = clean_data_frame(geo_data_frame)
     return geo_data_frame
