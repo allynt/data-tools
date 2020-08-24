@@ -16,4 +16,38 @@ Typical usage is...
 
 ## notes
 
-`aws s3 sync --profile orbis-<environment> s3://astrosat-<environment>-staticdata/ .`
+"./data" points to:
+
+```
+.
+├── data
+│   ├── processed
+│   │   ├── geometry_region_layer_merged_constrained.geojson
+│   │   ├── geometry_region_layer_merged.geojson
+│   │   └── geometry_region_layer__mvt
+│   │       └── z
+│   │           └── x
+│   │               └── y.pbf
+│   └── raw
+│       └── soft link to CSV files processed by the data-team
+├── geometry
+│   ├── processed
+│   │   ├── lad_gb.geojson
+│   │   ├── lsoa_england_wales.geojson
+│   │   ├── lsoa_gb.geojson
+│   │   ├── lsoa_scotland.geojson
+│   │   └── oa_gb.geojson
+│   └── raw
+│       ├── lad
+│       │   └── <shapefiles>
+│       ├── lsoa
+│       │   └── <shapefiles>
+│       └── oa
+│       └── oa
+│           └── <shapefiles>
+├── metadata
+│   ├── columns_lad.json
+│   ├── columns_lsoa.json
+│   └── columns_oa.json
+└── README
+```
