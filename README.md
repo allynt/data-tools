@@ -6,7 +6,7 @@ A bunch of tools for working w/ data
 
 Typical usage is...
 
-1. convert a Geometry Shapefile to GeoJSON: `python tools/convert_geometry.py --index "INDEX" --output data/geometry/processed/<filename>.geojson` where "INDEX" is the column to to identify each row (typically this is something like "OA code").
+1. convert a Geometry Shapefile to GeoJSON: `python tools/convert_geometry.py --index "INDEX" --output data/geometry/processed/<filename>.geojson data/geometry/raw/oa/infuse_oa_lyr_2011_clipped.shp` where "INDEX" is the column to to identify each row (typically this is something like "OA code").
 2. combine several Geometry GeoJSON files into a single Geometry GeoJSON file: `python tools/combine_geometry.py --ouput data/geometry/processed/<filename>.geojson data/geometry/processed/<file_1_to_merge>.geojson data/geometry/processed/<file_n_to_merge>.geojson`. This comes in handy when combining Scottish & English LSOA files.
 3. merge a bunch of Data CSV files w/ the aforementioned Geometry files: `python tools/merge_data_and_geometry.py --geometry-index "index" --data-index "OA code" data/geometries/processed/oa_gb.geojson data/data/raw.isolation+/oa_gb_lfp_*.csv --output data/data/processed/oa_gb_lfp_merged.geojson` (note that --geometry-index is just set to "index" b/c it will have been renamed in step 1 above).
 4. `python tools/constrain_data.pydata/metadata/columns_oa.json data/data/processed/oa_gb_lft_merged.geojson --output data/data/processed/oa_gb_lfp_merged_constrained.geojson`. "columns_oa.json" contains a dictionary mapping the column names of the CSV files to the names that ought to be displayed in **orbis**.
