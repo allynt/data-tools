@@ -6,15 +6,19 @@ A bunch of tools for working w/ data
 
 Typical usage is...
 
-1. get original shapefile for geometry
-2. `convert_geometry` to convert shapefile to geojson
-3. `combine_geometry` to combine a bunch of geometry geojson files (to combine scottish & english geometry for instance)
-4. `merge_data_and_geometry` to merge a bunch of data CSV files w/ the aforementioned geometry
-5. `constrain_data` to select a subset of data columns (and potentially rename them)
-6. `generate_mvt` to convert that converted/combined/merged/constrained data from GeoJSON to MVT
-7. upload to **static-data-server**: `aws s3 cp --profile orbis-<environment> ./<whatever> s3://astrosat-<environment>-staticdata/<whatever> --recursive`
+1. convert a Geometry Shapefile to GeoJSON: `python tools/convert_geometry.py --index "INDEX" --output data/geometry/processed/<filename>.geojson` where "INDEX" is the column to to identify each row (typically this is something like "OA code").
+2. combine several Geometry GeoJSON files into a single Geometry GeoJSON file: `python tools/combine_geometry.py --ouput data/geometry/processed/<filename>.geojson data/geometry/processed/<file_1_to_merge>.geojson data/geometry/processed/<file_n_to_merge>.geojson`. This comes in handy when combining Scottish & English LSOA files.
+3. merge a bunch of Data CSV files w/ the aforementioned Geometry files: `python tools/merge_data_and_geometry.py --geometry-index "index" --data-index "OA code" data/geometries/processed/oa_gb.geojson data/data/raw.isolation+/oa_gb_lfp_*.csv --output data/data/processed/oa_gb_lfp_merged.geojson` (note that --geometry-index is just set to "index" b/c it will have been renamed in step 1 above).
+4. `python tools/constrain_data.pydata/metadata/columns_oa.json data/data/processed/oa_gb_lft_merged.geojson --output data/data/processed/oa_gb_lfp_merged_constrained.geojson`. "columns_oa.json" contains a dictionary mapping the column names of the CSV files to the names that ought to be displayed in **orbis**.
+5. generate MVT from that converted/combined/merged/constrained data: `./tools/generate_mvt.sh data/data/processed/oa_gb_lfp_merged_constrained.geojson data/data/processed/oa_gb_lfp__mvt`
+6. upload to **static-data-server**: `aws s3 cp --profile orbis-<environment> data/data/processed/oa_gb_lfp__mvt/ s3://astrosat-<environment>-staticdata/astrosat/isolation_plus/lfp/<version>/oa_gb_lfp__mvt/ --recursive`
+7. ensure that the `DataSources` in **data-sources-directory** match the current state of the uploaded data.
+
+In practice, steps 1-2 do not have to be redone. Steps 3-7 only have to be redone when the data-team changes the data. And Step 8 rarely has to be redone.
 
 ## notes
+
+convention is to name files like: `<geometry>_<region>_<layer>_<processing>.geojson` where "geometry" is one of "oa", "lsoa", or "la", region is usually "gb", layer is one of the isolation_plus layers, and processing can be "merged" or "merged_constrained" or "\_\_mvt".
 
 "./data" points to:
 
