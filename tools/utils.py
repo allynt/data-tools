@@ -3,9 +3,20 @@ import json
 import pandas as pd
 import geopandas as gpd
 
-
 CRS = "EPSG:4326"
 
+EXTRA_DATA_INDEX = "area code"
+
+EXTRA_DATA_COLUMS = {
+    "Households": "Households",
+    "Population": "Population",
+    "Population year": "Population year",
+    "area name": "area name",
+    "within LAD": "within LAD",
+    "within LAD name": "within LAD name",
+    "within LSOA": "within LSOA",
+    "within MSOA": "within MSOA",
+}
 
 def clean_data_frame(data_frame):
     # replace NaN w/ None...
@@ -32,10 +43,7 @@ def reindex_data_frame(data_frame, index_name="index"):
 
 def select_and_rename_columns(data_frame, columns, ignore_missing=False):
     if ignore_missing:
-        columns = {
-            k: v for k, v in columns.items()
-            if k in data_frame.columns
-        }
+        columns = {k: v for k, v in columns.items() if k in data_frame.columns}
     data_frame = data_frame[list(columns.keys())]
     data_frame = data_frame.rename(columns=columns)
     return data_frame
@@ -52,7 +60,9 @@ def import_really_big_geometry(geometry_file, index_name="index"):
     # working w/ OA is a PITA b/c it's really big;
     # I have to buffer the content in JSON or I run out of memory
     geo_data_content = json.load(geometry_file)
-    geo_data_frame = gpd.GeoDataFrame.from_features(geo_data_content["features"])
+    geo_data_frame = gpd.GeoDataFrame.from_features(
+        geo_data_content["features"]
+    )
     geo_data_frame = reindex_data_frame(geo_data_frame, index_name=index_name)
     geo_data_frame = clean_data_frame(geo_data_frame)
     return geo_data_frame

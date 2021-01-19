@@ -19,7 +19,7 @@ selects a subset of data and renames it as per the config file
 @click.argument("data", type=click.File("r"))
 def constrain_data(index, output, columns, data):
     columns = json.load(columns)
-    columns.update({"geometry": "geometry"})
+    columns.update({"geometry": "geometry", **EXTRA_DATA_COLUMNS})
 
     # geo_data_frame = gpd.read_file(data)
     geo_data_frame = import_really_big_geometry(data, index_name=index)
