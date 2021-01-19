@@ -8,14 +8,14 @@ CRS = "EPSG:4326"
 EXTRA_DATA_INDEX = "area code"
 
 EXTRA_DATA_COLUMS = {
-    "Households": "Households",
-    "Population": "Population",
-    "Population year": "Population year",
-    "area name": "area name",
-    "within LAD": "within LAD",
-    "within LAD name": "within LAD name",
-    "within LSOA": "within LSOA",
-    "within MSOA": "within MSOA",
+    "Households": "households",
+    "Population": "population",
+    "Population year": "population_year",
+    "area name": "area_name",
+    "within LAD": "within_LAD",
+    "within LAD name": "within_LAD_name",
+    "within LSOA": "within_LSOA",
+    "within MSOA": "within_MSOA",
 }
 
 def clean_data_frame(data_frame):
